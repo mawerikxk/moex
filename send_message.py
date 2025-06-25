@@ -1,15 +1,22 @@
 import os
 import requests
 
-# Задай свои цены покупки здесь:
-buy_prices = {
+stocks = {
     "MOEX": 195.88,
     "MTSS": 233.00,
     "X5": 3245.94
 }
 
-def get_price(ticker):
-    url = f"https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities/{ticker}.json"
+bonds = {
+    "RU000A10A3Z4": 1000.00,  # ГТЛК 2P-04
+    "RU000A10ASC6": 1000.00,  # Европлн1Р9
+    "RU000A10AXX2": 1000.00,  # Хромос Б3
+    "RU000A10AYB6": 1000.00,  # Аспэйс 1Р2
+    "RU000A10B8C1": 1000.00   # ЛаймЗайм05
+}
+
+def get_price(ticker, board, market):
+    url = f"https://iss.moex.com/iss/engines/stock/markets/{market}/boards/{board}/securities/{ticker}.json"
     try:
         response = requests.get(url)
         data = response.json()
@@ -49,11 +56,16 @@ if __name__ == "__main__":
     if not token or not chat_id:
         print("Ошибка: TELEGRAM_TOKEN или TELEGRAM_CHAT_ID не заданы")
     else:
-        message_lines = []
-        for ticker, buy_price in buy_prices.items():
-            current_price = get_price(ticker)
-            message_lines.append(format_line(ticker, current_price, buy_price))
+        stock_lines = []
+        for ticker, buy_price in stocks.items():
+            current_price = get_price(ticker, board="TQBR", market="shares")
+            stock_lines.append(format_line(ticker, current_price, buy_price))
 
-        message = "\n".join(message_lines)
+        bond_lines = []
+        for ticker, buy_price in bonds.items():
+            current_price = get_price(ticker, board="TQOB", market="bonds")
+            bond_lines.append(format_line(ticker, current_price, buy_price))
+
+        message = "📊 Акции:\n" + "\n".join(stock_lines) + "\n\n💵 Облигации:\n" + "\n".join(bond_lines)
         print("Отправка сообщения:\n", message)
         send_telegram_message(token, chat_id, message)
