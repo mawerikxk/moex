@@ -34,9 +34,11 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
+      - name: Print UTC time
+        run: date
+
       - name: Run script
         run: python send_message.py
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-
