@@ -2,19 +2,20 @@ import os
 import requests
 
 def get_price(ticker):
-    url = f"https://iss.moex.com/iss/engines/stock/markets/shares/securities/{ticker}.json"
+    url = f"https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities/{ticker}.json"
     try:
         response = requests.get(url)
         data = response.json()
         secdata = data['marketdata']['data']
         columns = data['marketdata']['columns']
-        
-        if not secdata:
+
+        if not secdata or not secdata[0]:
             return f"{ticker} — нет данных"
-        
+
         last_index = columns.index("LAST")
         last_price = secdata[0][last_index]
-        return f"{ticker} — {last_price} ₽" if last_price else f"{ticker} — нет цены"
+
+        return f"{ticker} — {last_price:.2f} ₽" if last_price else f"{ticker} — нет цены"
     except Exception as e:
         return f"{ticker} — ошибка ({e})"
 
@@ -33,7 +34,7 @@ if __name__ == "__main__":
     if not token or not chat_id:
         print("Ошибка: переменные TELEGRAM_TOKEN или TELEGRAM_CHAT_ID не заданы")
     else:
-        tickers = ["MOEX", "MTSS", "X5"]
+        tickers = ["MOEX", "MTSS", "FIVE"]
         prices = [get_price(ticker) for ticker in tickers]
         message = "\n".join(prices)
         print("Отправка сообщения:\n", message)
