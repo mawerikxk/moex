@@ -1,9 +1,9 @@
 name: Send Telegram Message Every Hour
 
 on:
-  workflow_dispatch:     # позволяет запускать вручную
+  workflow_dispatch: {}
   schedule:
-    - cron: '0 * * * *' # запуск каждый час ровно
+    - cron: '0 * * * *'
 
 jobs:
   send_message:
@@ -25,3 +25,4 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
