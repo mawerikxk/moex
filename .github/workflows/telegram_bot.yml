@@ -1,6 +1,12 @@
 name: Send Telegram Message Every Hour
 
 on:
+  workflow_dispatch:    # позволяет запускать вручную
+  schedule:
+    - cron: '0 * * * *'  # запуск каждый час ровно
+
+
+on:
   schedule:
     - cron: '0 * * * *'  # запуск каждый час ровно
 
