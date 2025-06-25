@@ -5,7 +5,7 @@ import requests
 buy_prices = {
     "MOEX": 195.88,
     "MTSS": 233.00,
-    "FIVE": 3245.94
+    "X5": 3245.94
 }
 
 def get_price(ticker):
