@@ -34,7 +34,7 @@ if __name__ == "__main__":
     if not token or not chat_id:
         print("Ошибка: переменные TELEGRAM_TOKEN или TELEGRAM_CHAT_ID не заданы")
     else:
-        tickers = ["MOEX", "MTSS", "FIVE"]
+        tickers = ["MOEX", "MTSS", "X5"]
         prices = [get_price(ticker) for ticker in tickers]
         message = "\n".join(prices)
         print("Отправка сообщения:\n", message)
