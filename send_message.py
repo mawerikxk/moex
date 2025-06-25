@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
         bond_lines = []
         for ticker, buy_price in bonds.items():
-            current_price = get_price(ticker, board="TQOB", market="bonds")
+            current_price = get_price(ticker, board="TQCB", market="bonds")
             bond_lines.append(format_line(ticker, current_price, buy_price))
 
         message = "📊 Акции:\n" + "\n".join(stock_lines) + "\n\n💵 Облигации:\n" + "\n".join(bond_lines)
